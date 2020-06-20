@@ -9,20 +9,14 @@ function playBubble(audio_ctx) {
   oscillator.type = "sine";
   oscillator.frequency.value = 126.0;
 
-  // 先把当前音量设为0
   gainNode.gain.setValueAtTime(0, audio_ctx.currentTime);
-  // 0.01秒时间内音量从刚刚的0变成1，线性变化
   gainNode.gain.linearRampToValueAtTime(10, audio_ctx.currentTime + 0.01);
-  // 声音走起
   oscillator.start(audio_ctx.currentTime);
-  // 1秒时间内音量从刚刚的1变成0.001，指数变化
   gainNode.gain.exponentialRampToValueAtTime(0.001, audio_ctx.currentTime + 1);
-  // 1秒后停止声音
   oscillator.stop(audio_ctx.currentTime + 1);
 }
 
 function casesDestroy() {
-  console.log(cases_animator);
   cancelAnimationFrame(cases_animator);
   $("#cases").fadeOut(1000);
 }
@@ -213,7 +207,6 @@ function casesStartup() {
   }
 
   function getVirusScene(arr_d, arr_f, d_num) {
-    console.log(d_num);
     let r = new Float32Array(arr_d.length);
     for (let i = 0; i < d_num * 3; i++) r[i] = arr_f[i];
     for (let i = d_num * 3; i < arr_d.length; i++) r[i] = arr_d[i];
@@ -280,7 +273,6 @@ function casesStartup() {
 
       function callback() {
         particles.material.uniforms.val.value = this.val;
-        console.log(pos);
       }
 
       $("#cases")[0].onmousemove = function () {

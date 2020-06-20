@@ -229,7 +229,7 @@ function rainStartup() {
       distortionScale: 3.7,
     });
     water.material.uniforms.size.value = 0.1;
-    console.log(water.material.uniforms.size);
+    // console.log(water.material.uniforms.size);
 
     water.rotation.x = -Math.PI / 2;
     scene.add(water);
@@ -371,7 +371,6 @@ function rainSubScene() {
   fetch("./data/sacrifice_total.json")
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       let gender_color_map = {
         男: "#aaa",
         女: "#FFF5BB",
