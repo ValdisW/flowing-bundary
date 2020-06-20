@@ -1,11 +1,13 @@
 # flowing-bundary
 
+NodeJS install:
+
 ```bash
-npm install
-npm run start
+$ npm install
+$ npm run start
 ```
 
-Open in browser
+Then open in browser:
 
 ```bash
 localhost:3000
