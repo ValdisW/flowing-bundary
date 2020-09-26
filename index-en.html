@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>FLOWING BUNDARY</title>
+    <link rel="stylesheet" href="./style/index-en.css" />
+  </head>
+  <body>
+    <audio id="bgm" src="./audio/bgm.mp3" loop></audio>
+    <audio id="bgs" src="./audio/bubble-click.wav"></audio>
+
+    <!-- 全局交互控件 -->
+    <div id="global-control">
+      <!-- 声音控制 -->
+      <div id="audio-control">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- 语言切换 -->
+      <div id="language"><a href="./index.html">EN/CH</a></div>
+
+      <!-- 菜单按钮 -->
+      <div id="info">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <!-- 菜单 -->
+      <div id="info-panel">
+        <ul>
+          <li id="menu-homepg">Home</li>
+          <li id="menu-proj">Project</li>
+          <li id="menu-team">Team</li>
+        </ul>
+      </div>
+
+      <!-- 章节进度 -->
+      <div id="chapter-buttons">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <!-- 前后章节 -->
+      <div id="prev-button"></div>
+      <div id="next-button"></div>
+    </div>
+
+    <!-- 加载界面 -->
+    <div id="loading">
+      <canvas id="loading-bg-canvas"></canvas>
+      <canvas id="loading-control"></canvas>
+    </div>
+
+    <!-- 标题界面 -->
+    <div id="title">
+      <video
+        src="//webplus-cn-shenzhen-s-5daffb81275f577ded165ec0.oss-cn-shenzhen.aliyuncs.com/static/video/bg.mp4"
+        autoplay
+        loop
+      ></video>
+      <canvas id="canvas-bg"></canvas>
+      <canvas id="title-canvas"></canvas>
+      <p>Data exploration of COVID-19 in China</p>
+      <p>Click to Explore More</p>
+    </div>
+
+    <!-- cases -->
+    <div id="cases">
+      <canvas id="cases-canvas"></canvas>
+      <div id="cases-timeline"></div>
+      <div id="timeline-label">
+        <span id="timeline-label-date"></span>
+        <span id="timeline-label-cases"></span>
+      </div>
+      <div class="num-label">
+        <p>Confirmed Cases Nationwide</p>
+        <p>0</p>
+      </div>
+      <div class="opening">
+        <div>
+          <h2>1</h2>
+          <h1>Dust</h1>
+          <div>
+            <p>We are dust for no reason</p>
+            <p>Walk for no reason</p>
+            <p>The darkness only needs to open a gap</p>
+            <p>Can blow up a hurricane</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- sos -->
+    <div id="sos">
+      <canvas id="help-canvas"></canvas>
+      <div class="num-label" id="label-to-disappear">
+        <!-- <p>微博新冠肺炎求助超话部分信息</p> -->
+        <p>Patients Seeking Help on Weibo</p>
+        <p>510</p>
+      </div>
+      <div id="windows">
+        <div id="help-container"></div>
+        <div id="kwds"></div>
+        <div id="help-back-button" class="back-button"></div>
+        <div class="num-label">
+          <p>The number of Weibo the word appears</p>
+          <p>0</p>
+        </div>
+
+        <div id="help-detail">
+          <div id="help-detail-back-button">
+            <div></div>
+            <div></div>
+          </div>
+          <div id="help-detail-text"></div>
+        </div>
+        <div id="help-detail-info"></div>
+      </div>
+      <div class="opening">
+        <div>
+          <h2>2</h2>
+          <h1>Lights</h1>
+          <div>
+            <p>想要在黑夜里装满灯火</p>
+            <p>让报讯的鸟不再迷途</p>
+            <p>它飞越灰的天，涩的云</p>
+            <p>它来自焦灼的心</p>
+            <p>却时常抵达寂静</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rain -->
+    <div id="rain">
+      <canvas id="rain-canvas"></canvas>
+      <div class="num-label">
+        <!-- <p>全国殉职人员累计</p> -->
+        <p>Accumulated Martyrs Nationwide</p>
+        <p>486</p>
+      </div>
+      <div id="rain-subscene">
+        <div id="rain-container"></div>
+        <div class="num-label">
+          <!-- <p>全国殉职人员累计</p> -->
+          <p>Accumulated Martyrs Nationwide</p>
+          <p>486</p>
+        </div>
+        <div id="rain-back-button" class="back-button"></div>
+        <div id="rain-selector">
+          <div id="rain-selector-line"></div>
+          <div id="rain-selector-head"></div>
+          <div id="rain-selector-name"></div>
+          <div id="rain-selector-time-label"></div>
+        </div>
+        <ul id="sacrifice-info-list">
+          <li>
+            <p class="sacrifice-label">Gender</p>
+            <p class="sacrifice-value" id="sacrifice-value-gender"></p>
+          </li>
+          <li>
+            <p class="sacrifice-label">Age</p>
+            <p class="sacrifice-value" id="sacrifice-value-age"></p>
+          </li>
+          <li>
+            <p class="sacrifice-label">Occupation</p>
+            <p class="sacrifice-value" id="sacrifice-value-occupation"></p>
+          </li>
+          <li>
+            <p class="sacrifice-label">Location</p>
+            <p class="sacrifice-value" id="sacrifice-value-location"></p>
+          </li>
+          <li>
+            <p class="sacrifice-label">Cause of Martyrdom</p>
+            <p class="sacrifice-value" id="sacrifice-value-cause"></p>
+          </li>
+          <li>
+            <p class="sacrifice-label">Martyrdom time</p>
+            <p class="sacrifice-value" id="sacrifice-value-time"></p>
+          </li>
+        </ul>
+      </div>
+      <div class="opening">
+        <div>
+          <h2>3</h2>
+          <h1>Tear of Rain</h1>
+          <div>
+            <p>每个流泪的名字</p>
+            <p>雨都在夜里偷偷偿还</p>
+            <p>不要忘记，不要忘记</p>
+            <p>不要让水消融在水里</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bloom -->
+    <div id="bloom">
+      <div class="num-label">
+        <!-- <p>全国累计治愈病例</p> -->
+        <p>Cured Cases Nationwide</p>
+        <p>62223</p>
+      </div>
+      <div class="opening">
+        <div>
+          <h2>4</h2>
+          <h1>Bloom</h1>
+          <div>
+            <p>春的欢愉</p>
+            <p>裹着露水晶莹的叹息</p>
+            <p>雨在天空没了痕迹</p>
+            <p>从此却反反复复地</p>
+            <p>出现在每朵花的睡梦里</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 鼠标跟随 -->
+    <div id="cursor">
+      <!-- <div id="cursor-center"></div> -->
+    </div>
+
+    <!-- scripts -->
+    <script src="//cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+    <script src="//tgideas.qq.com/2017/three/lib/tween.min.js"></script>
+    <script src="//cdn.bootcdn.net/ajax/libs/d3/5.16.0/d3.min.js"></script>
+    <script src="./javascripts/three115.min.js"></script>
+    <script src="./javascripts/CSS2DRenderer.js"></script>
+    <script src="./javascripts/EffectComposer.js"></script>
+    <script src="./javascripts/UnrealBloomPass.js"></script>
+    <script src="./javascripts/OrbitControls.js"></script>
+    <script src="./javascripts/myWebGLUtils.js"></script>
+    <script src="./javascripts/GPUComputationRenderer.js"></script>
+    <script src="./javascripts/Sky.js"></script>
+    <script src="./javascripts/Water.js"></script>
+
+    <script type="glsl" id="vertex-shader-source">
+      attribute vec2 a_position;
+
+      void main() {
+        gl_Position = vec4(a_position, 0.0, 1.0);
+      }
+    </script>
+    <script type="x-shader/x-fragment" id="fragment-shader-source">
+      #ifdef GL_ES
+      precision mediump float;
+      #endif
+
+      uniform vec2 u_resolution;
+      uniform float u_time;
+
+      float random(vec2 st){
+        return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*43758.5453123);
+      }
+
+      void main(){
+        vec2 st=gl_FragCoord.xy/u_resolution.xy;
+        float time=ceil(u_time*20.);
+        float rnd_r=random(st+sin(time));
+        float rnd_g=random(st+cos(time));
+        float rnd_b=random(st+sin(time));
+        gl_FragColor=vec4(vec3(rnd_r,rnd_g,rnd_b)-.7,1.);
+      }
+    </script>
+    <script src="./script/index.js"></script>
+    <script src="./script/loading.js"></script>
+    <script src="./script/cases.js"></script>
+    <script src="./script/help.js"></script>
+    <script src="./script/rain.js"></script>
+    <script src="./script/bloom.js"></script>
+  </body>
+</html>
