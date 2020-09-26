@@ -3,7 +3,11 @@
  */
 
 // global variables
-let load_list, loading_animation, bg_animation, title_text_animation, current_part_index;
+let load_list,
+  loading_animation,
+  bg_animation,
+  title_text_animation,
+  current_part_index;
 
 const main_canvas = document.querySelector("#loading-bg-canvas");
 main_canvas.setAttribute("width", window.innerWidth);
@@ -14,7 +18,7 @@ const gl = main_canvas.getContext("webgl");
 load_list = [
   "./GLSL/particles.vert",
   "./GLSL/particles.frag",
-  "./video/bg.mp4",
+  "//webplus-cn-shenzhen-s-5daffb81275f577ded165ec0.oss-cn-shenzhen.aliyuncs.com/static/video/bg.mp4",
   "./audio/bubble-click.wav",
   "./audio/bgm.mp3",
   "./image/svg/title-text.svg",
@@ -428,13 +432,19 @@ load_list = [
 
 // 加载背景
 function setupLoadingBg() {
-  let f = Promise.all([fetch("./GLSL/loading.vert").then((d) => d.text()), fetch("./GLSL/loading.frag").then((d) => d.text())]);
+  let f = Promise.all([
+    fetch("./GLSL/loading.vert").then((d) => d.text()),
+    fetch("./GLSL/loading.frag").then((d) => d.text()),
+  ]);
   f.then((d) => {
     const vertex_shader_source = d[0];
     const fragment_shader_source = d[1];
 
     let vertexShader = _compileShader(vertex_shader_source, gl.VERTEX_SHADER),
-      fragmentShader = _compileShader(fragment_shader_source, gl.FRAGMENT_SHADER);
+      fragmentShader = _compileShader(
+        fragment_shader_source,
+        gl.FRAGMENT_SHADER
+      );
 
     let shaderProgram = _linkShaders(vertexShader, fragmentShader);
     gl.useProgram(shaderProgram);
@@ -454,7 +464,11 @@ function setupLoadingBg() {
         y1 = y,
         x2 = x + w,
         y2 = y + h;
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([x1, y1, x2, y1, x2, y2, x1, y1, x1, y2, x2, y2]), gl.STATIC_DRAW);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([x1, y1, x2, y1, x2, y2, x1, y1, x1, y2, x2, y2]),
+        gl.STATIC_DRAW
+      );
     }
     setRect(-1, -1, 2, 2);
 
@@ -512,9 +526,31 @@ function _load(ctx) {
       }
 
       ctx.clearRect(0, 0, 10000, 10000);
-      _drawRoundedRect(ctx, window.innerWidth / 3, window.innerHeight / 2, window.innerWidth / 3, 8, 4, false, true);
-      _drawRoundedRect(ctx, window.innerWidth / 3, window.innerHeight / 2, ((window.innerWidth / 3) * loading_percent) / 100, 8, 4, true, true);
-      ctx.fillText(loading_percent.toFixed(0) + "%", (window.innerWidth / 3) * 2 + 20, window.innerHeight / 2 + 6);
+      _drawRoundedRect(
+        ctx,
+        window.innerWidth / 3,
+        window.innerHeight / 2,
+        window.innerWidth / 3,
+        8,
+        4,
+        false,
+        true
+      );
+      _drawRoundedRect(
+        ctx,
+        window.innerWidth / 3,
+        window.innerHeight / 2,
+        ((window.innerWidth / 3) * loading_percent) / 100,
+        8,
+        4,
+        true,
+        true
+      );
+      ctx.fillText(
+        loading_percent.toFixed(0) + "%",
+        (window.innerWidth / 3) * 2 + 20,
+        window.innerHeight / 2 + 6
+      );
     });
   }
 }
@@ -530,8 +566,21 @@ function setupLoadingBar() {
   ctx.fillStyle = "#fff";
   ctx.font = "18px bold 黑体";
   ctx.textBaseline = "middle";
-  _drawRoundedRect(ctx, window.innerWidth / 3, window.innerHeight / 2, window.innerWidth / 3, 8, 4, false, true);
-  ctx.fillText("0%", (window.innerWidth / 3) * 2 + 20, window.innerHeight / 2 + 6);
+  _drawRoundedRect(
+    ctx,
+    window.innerWidth / 3,
+    window.innerHeight / 2,
+    window.innerWidth / 3,
+    8,
+    4,
+    false,
+    true
+  );
+  ctx.fillText(
+    "0%",
+    (window.innerWidth / 3) * 2 + 20,
+    window.innerHeight / 2 + 6
+  );
   _load(ctx);
 }
 
@@ -551,10 +600,35 @@ function startBGCanvas() {
   (function animateBGCanvas() {
     bg_animation = requestAnimationFrame(animateBGCanvas);
 
-    ctx_bg.drawImage(video, 0, offsetY, 1920, (window.innerWidth / 1920) * 1080 - offsetY, 0, 0, window.innerWidth, window.innerHeight - offsetY);
-    ctx_bg.drawImage(video, 0, 0, 1920, offsetY, 0, (window.innerWidth / 1920) * 1080 - offsetY, window.innerWidth, offsetY);
+    ctx_bg.drawImage(
+      video,
+      0,
+      offsetY,
+      1920,
+      (window.innerWidth / 1920) * 1080 - offsetY,
+      0,
+      0,
+      window.innerWidth,
+      window.innerHeight - offsetY
+    );
+    ctx_bg.drawImage(
+      video,
+      0,
+      0,
+      1920,
+      offsetY,
+      0,
+      (window.innerWidth / 1920) * 1080 - offsetY,
+      window.innerWidth,
+      offsetY
+    );
     offsetY = (offsetY + 12) % 1080;
-    let img_data = ctx_bg.getImageData(0, 0, window.innerWidth, window.innerHeight),
+    let img_data = ctx_bg.getImageData(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+      ),
       img_data_length = img_data.data.length / 4;
     for (var i = 0; i < img_data_length; i++) {
       img_data.data[i * 4] *= 0.9;
@@ -580,8 +654,10 @@ function titleStartup() {
   // 侧边栏
   $("#info").click(function () {
     $(this).toggleClass("info-to-close");
-    if ($(this).hasClass("info-to-close")) TweenMax.to($("#info-panel")[0], 0.5, { transform: "translateX(0)" });
-    else TweenMax.to($("#info-panel")[0], 0.5, { transform: "translateX(-101%)" });
+    if ($(this).hasClass("info-to-close"))
+      TweenMax.to($("#info-panel")[0], 0.5, { transform: "translateX(0)" });
+    else
+      TweenMax.to($("#info-panel")[0], 0.5, { transform: "translateX(-101%)" });
   });
 
   // 标题文本特效
@@ -610,9 +686,14 @@ function titleStartup() {
       title_text_animation = requestAnimationFrame(animate);
       for (let h = 0; h < canvas.height; h++) {
         for (let i = canvas.width * h; i < canvas.width * (h + 1); i++) {
-          let offset = Math.floor(Math.sin((h + timer) * 0.05) * Math.cos((h + timer) * 0.05) * 10);
+          let offset = Math.floor(
+            Math.sin((h + timer) * 0.05) * Math.cos((h + timer) * 0.05) * 10
+          );
 
-          if (i + offset < canvas.width * h || i + offset >= canvas.width * (h + 1)) {
+          if (
+            i + offset < canvas.width * h ||
+            i + offset >= canvas.width * (h + 1)
+          ) {
             img_data.data[i * 4 + 3] = 0;
           } else {
             img_data.data[i * 4] = img_data_copy.data[(i + offset) * 4];
