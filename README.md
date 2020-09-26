@@ -1,14 +1,33 @@
 # flowing-bundary
 
-NodeJS install:
+## Install
 
 ```bash
-$ npm install
-$ npm run start
+npm install
+
+# or
+
+yarn install
 ```
 
-Then open in browser:
+## Serve
 
 ```bash
-localhost:3000
+npm run dev
+
+# or
+
+yarn dev
+```
+
+Then Open In Browser
+
+```bash
+   ┌─────────────────────────────────────────────────┐
+   │                                                 │
+   │   Serving!                                      │
+   │                                                 │
+   │   - Local:            http://localhost:3000     │
+   │                                                 │
+   └─────────────────────────────────────────────────┘
 ```
